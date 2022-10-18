@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -33,5 +34,10 @@ public class CustomerEntity implements Serializable {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false, length = 1)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    private RoleEntity role;
 
 }

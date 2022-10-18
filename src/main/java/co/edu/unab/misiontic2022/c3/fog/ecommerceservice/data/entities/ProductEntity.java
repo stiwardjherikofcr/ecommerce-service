@@ -49,6 +49,6 @@ public class ProductEntity implements Serializable {
 
     @Column(name = "create_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private Date createAt;
 
 }

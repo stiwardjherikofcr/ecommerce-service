@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 public class ProductDataResponseModel {
 
-    private Long idProduct;
+    private Long id;
     private String name;
     private String description;
     private String image;
