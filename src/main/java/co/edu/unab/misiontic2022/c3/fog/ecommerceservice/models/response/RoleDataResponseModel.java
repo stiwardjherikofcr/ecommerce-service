@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class RoleDataResponseModel {
 
-    private Long id;
+    private Long idRole;
     private String name;
 
 }

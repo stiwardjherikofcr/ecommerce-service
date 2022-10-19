@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "PRODUCTS")
@@ -22,7 +23,8 @@ public class ProductEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "id_product")
+    private long idProduct;
 
     @Column(nullable = false)
     private String name;
@@ -42,10 +44,13 @@ public class ProductEntity implements Serializable {
     @Column(nullable = false)
     private Boolean active;
 
-    @NotNull(message = "La categoria no puede ser vacia")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @NotNull(message = "The category is required")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_category", referencedColumnName = "id_category")
     private CategoryEntity category;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private List<OrderDetailEntity> orderDetailsList;
 
     @Column(name = "create_at")
     @Temporal(TemporalType.TIMESTAMP)

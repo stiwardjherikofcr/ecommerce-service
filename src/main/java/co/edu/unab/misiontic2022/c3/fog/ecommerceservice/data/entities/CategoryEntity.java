@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "CATEGORIES")
@@ -20,9 +21,13 @@ public class CategoryEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "id_category")
+    private long idCategory;
 
     @Column(nullable = false, length = 20)
     private String name;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    private List<ProductEntity> productsLists;
 
 }

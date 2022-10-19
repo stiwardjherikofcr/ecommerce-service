@@ -19,13 +19,16 @@ public class OrderDetailEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_order_detail")
+    private Long idOrderDetail;
 
-    @Column(nullable = false)
-    private Integer idOrder;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_order", referencedColumnName = "id_order")
+    private OrderEntity order;
 
-    @Column(nullable = false)
-    private Integer idProduct;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_product", referencedColumnName = "id_product")
+    private ProductEntity product;
 
     @Column(nullable = false)
     private Integer quantity;

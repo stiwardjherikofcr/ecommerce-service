@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "CUSTOMERS")
@@ -21,7 +22,8 @@ public class CustomerEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "id_customer")
+    private long idCustomer;
 
     @Column(nullable = false, length = 100)
     private String fullName;
@@ -35,9 +37,11 @@ public class CustomerEntity implements Serializable {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, length = 1)
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_role", referencedColumnName = "id_role")
     private RoleEntity role;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+    private List<OrderEntity> ordersList;
 
 }

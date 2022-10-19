@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "ORDERS")
@@ -21,13 +22,18 @@ public class OrderEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false)
-    private Integer idCustomer;
+    @Column(name = "id_order")
+    private Long idOrder;
+    
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_customer", referencedColumnName = "id_customer")
+    private CustomerEntity customer;
 
     @Column(name = "create_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    private List<OrderDetailEntity> orderDetailsList;
 
 }

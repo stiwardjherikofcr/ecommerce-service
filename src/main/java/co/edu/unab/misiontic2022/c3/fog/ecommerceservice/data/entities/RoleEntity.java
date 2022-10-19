@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "ROLES")
@@ -20,9 +21,13 @@ public class RoleEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_role")
+    private Long idRole;
 
     @Column(nullable = false, length = 10)
     private String name;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
+    private List<CustomerEntity> customersList;
 
 }

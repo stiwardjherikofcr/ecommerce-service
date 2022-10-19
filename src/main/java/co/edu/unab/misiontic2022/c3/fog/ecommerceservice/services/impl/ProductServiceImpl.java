@@ -1,5 +1,6 @@
 package co.edu.unab.misiontic2022.c3.fog.ecommerceservice.services.impl;
 
+import co.edu.unab.misiontic2022.c3.fog.ecommerceservice.data.entities.ProductEntity;
 import co.edu.unab.misiontic2022.c3.fog.ecommerceservice.data.repository.IProductRepository;
 import co.edu.unab.misiontic2022.c3.fog.ecommerceservice.services.IProductService;
 import co.edu.unab.misiontic2022.c3.fog.ecommerceservice.shared.CategoryDto;
@@ -8,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,7 +23,12 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public List<ProductDto> listAllProduct() {
-        return null;
+        List<ProductEntity> productsEntity = productRepository.findAll();
+        List<ProductDto> productsDto = new ArrayList<>();
+        for (ProductEntity productEntity : productsEntity) {
+            productsDto.add(modelMapper.map(productEntity, ProductDto.class));
+        }
+        return productsDto;
     }
 
     @Override
