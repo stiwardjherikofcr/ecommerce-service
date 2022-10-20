@@ -13,7 +13,7 @@ public class ProductDataResponseModel {
     private String image;
     private Double price;
     private Integer stock;
-    private String active;
+    private Boolean active;
     private CategoryDataResponseModel category;
     private Date createAt;
 

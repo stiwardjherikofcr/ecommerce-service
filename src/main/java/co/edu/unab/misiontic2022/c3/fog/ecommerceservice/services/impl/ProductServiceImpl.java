@@ -33,21 +33,30 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public ProductDto getProduct(Long id) {
-        return null;
+        return productRepository.findById(id).map(productEntity -> modelMapper.map(productEntity, ProductDto.class)).orElse(null);
     }
 
     @Override
     public ProductDto createProduct(ProductDto product) {
-        return null;
+        ProductEntity productEntity = modelMapper.map(product, ProductEntity.class);
+        productEntity = productRepository.save(productEntity);
+        return modelMapper.map(productEntity, ProductDto.class);
     }
 
     @Override
     public ProductDto updateProduct(ProductDto product) {
-        return null;
+        ProductEntity productEntity = modelMapper.map(product, ProductEntity.class);
+        productEntity = productRepository.save(productEntity);
+        return modelMapper.map(productEntity, ProductDto.class);
     }
 
     @Override
     public ProductDto deleteProduct(Long id) {
+        ProductEntity productEntity = productRepository.findById(id).orElse(null);
+        if (productEntity != null) {
+            productRepository.delete(productEntity);
+            return modelMapper.map(productEntity, ProductDto.class);
+        }
         return null;
     }
 

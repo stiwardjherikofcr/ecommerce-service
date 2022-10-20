@@ -2,7 +2,6 @@ package co.edu.unab.misiontic2022.c3.fog.ecommerceservice.shared;
 
 import java.io.Serializable;
 
-
 public class CategoryDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
