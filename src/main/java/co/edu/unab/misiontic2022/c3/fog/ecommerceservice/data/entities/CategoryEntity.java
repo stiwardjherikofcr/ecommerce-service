@@ -10,7 +10,9 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "CATEGORIES")
+@Table(name = "CATEGORIES", indexes = {
+        @Index(name = "idx_category_name", columnList = "name")
+})
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,5 +1,6 @@
 package co.edu.unab.misiontic2022.c3.fog.ecommerceservice.services.impl;
 
+import co.edu.unab.misiontic2022.c3.fog.ecommerceservice.data.entities.CategoryEntity;
 import co.edu.unab.misiontic2022.c3.fog.ecommerceservice.data.entities.ProductEntity;
 import co.edu.unab.misiontic2022.c3.fog.ecommerceservice.data.repository.IProductRepository;
 import co.edu.unab.misiontic2022.c3.fog.ecommerceservice.services.IProductService;
@@ -33,7 +34,8 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public ProductDto getProduct(Long id) {
-        return productRepository.findById(id).map(productEntity -> modelMapper.map(productEntity, ProductDto.class)).orElse(null);
+        return productRepository.findById(id).map(productEntity -> modelMapper.map(productEntity, ProductDto.class))
+                .orElse(null);
     }
 
     @Override
@@ -61,8 +63,14 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public List<ProductDto> findByCategory(CategoryDto category) {
-        return null;
+    public List<ProductDto> findAllByCategory(CategoryDto category) {
+        CategoryEntity categoryEntity = modelMapper.map(category, CategoryEntity.class);
+        List<ProductEntity> productsEntity = productRepository.findAllByCategory(categoryEntity);
+        List<ProductDto> productsDto = new ArrayList<>();
+        for (ProductEntity productEntity : productsEntity) {
+            productsDto.add(modelMapper.map(productEntity, ProductDto.class));
+        }
+        return productsDto;
     }
 
 }

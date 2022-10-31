@@ -10,6 +10,7 @@ public class ProductCreateRequestModel {
     private String image;
     private Double price;
     private Integer stock;
-    private Integer category;
+    private Boolean active;
+    private Long idCategory;
 
 }

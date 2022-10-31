@@ -26,6 +26,26 @@ public class CustomerServiceImpl implements ICustomerService {
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
+    public CustomerDto signIn(CustomerDto customerDto) {
+        CustomerEntity customerEntity = customerRepository.findByUsername(customerDto.getUsername());
+        if (customerEntity == null) {
+            throw new ResourceNotFoundException("Customer not found");
+        }
+        if (!bCryptPasswordEncoder.matches(customerDto.getPassword(), customerEntity.getPassword())) {
+            throw new ResourceNotFoundException("Password incorrect");
+        }
+        return modelMapper.map(customerEntity, CustomerDto.class);
+    }
+
+    @Override
+    public CustomerDto signUp(CustomerDto customerDto) {
+        CustomerEntity customerEntity = modelMapper.map(customerDto, CustomerEntity.class);
+        customerEntity.setPassword(bCryptPasswordEncoder.encode(customerEntity.getPassword()));
+        CustomerEntity customerEntityRegistered = customerRepository.save(customerEntity);
+        return modelMapper.map(customerEntityRegistered, CustomerDto.class);
+    }
+
+    @Override
     public List<CustomerDto> listAllCustomers() {
         List<CustomerEntity> customersEntity = customerRepository.findAll();
         List<CustomerDto> customersDto = new ArrayList<>();
@@ -36,7 +56,7 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
-    public CustomerDto getCustomerById(Long id) throws ResourceNotFoundException{
+    public CustomerDto getCustomerById(Long id) throws ResourceNotFoundException {
         CustomerEntity customerEntity = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found for this id :: " + id));
         return modelMapper.map(customerEntity, CustomerDto.class);

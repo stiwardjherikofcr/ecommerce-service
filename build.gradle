@@ -35,6 +35,16 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
+task fatJar(type: Jar) {
+	manifest {
+		attributes 'Main-Class': 'co.edu.unab.misiontic2022.c3.fog.ecommerceservice.EcommerceServiceApplication'
+	}
+	archiveBaseName = "${rootProject.name}"
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+	with jar
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }

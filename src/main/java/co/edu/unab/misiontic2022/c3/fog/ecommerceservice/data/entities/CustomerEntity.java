@@ -11,7 +11,10 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "CUSTOMERS")
+@Table(name = "CUSTOMERS", indexes = {
+        @Index(name = "idx_customer_email", columnList = "email", unique = true),
+        @Index(name = "idx_customer_username", columnList = "username", unique = true)
+})
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,7 +34,7 @@ public class CustomerEntity implements Serializable {
     @Column(nullable = false, length = 50)
     private String email;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 20)
     private String username;
 
     @Column(nullable = false)

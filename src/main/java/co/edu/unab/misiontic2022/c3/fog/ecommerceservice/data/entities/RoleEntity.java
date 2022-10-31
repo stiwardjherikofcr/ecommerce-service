@@ -24,7 +24,7 @@ public class RoleEntity implements Serializable {
     @Column(name = "id_role")
     private Long idRole;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 20)
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")

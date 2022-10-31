@@ -12,7 +12,9 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "PRODUCTS")
+@Table(name = "PRODUCTS", indexes = {
+        @Index(name = "idx_product_name", columnList = "name", unique = true)
+})
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
